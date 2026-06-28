@@ -1,3 +1,6 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 import { NextRequest, NextResponse } from "next/server";
 import { hashPassword, newSessionToken, verifyPassword } from "@/lib/auth";
 import { getRoom, saveRoom } from "@/lib/store";
