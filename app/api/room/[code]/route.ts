@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getRoom, setTyping } from "@/lib/store";
+import { deleteRoom, getRoom } from "@/lib/store";
 
-export async function POST(
+export async function DELETE(
   req: NextRequest,
   { params }: { params: { code: string } }
 ) {
@@ -18,10 +18,10 @@ export async function POST(
       return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
     }
 
-    await setTyping(code, me.slot);
+    await deleteRoom(code);
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: "Could not update typing status." }, { status: 500 });
+    return NextResponse.json({ error: "Could not end the room." }, { status: 500 });
   }
 }

@@ -3,9 +3,6 @@ import { hashPassword, newSessionToken } from "@/lib/auth";
 import { createRoomRecord, saveRoom } from "@/lib/store";
 import type { Room } from "@/lib/types";
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-
 export async function POST(req: NextRequest) {
   try {
     const { name, password } = await req.json();
@@ -21,24 +18,27 @@ export async function POST(req: NextRequest) {
     }
 
     const code = await createRoomRecord();
+    const passwordHash = await hashPassword(password);
+    const sessionToken = newSessionToken();
+
     const room: Room = {
       code,
-      name: name.trim(),
-      password: await hashPassword(password),
       createdAt: Date.now(),
-      updatedAt: Date.now(),
-      participants: [],
-      messages: [],
-      typing: {},
+      participants: [
+        { slot: 1, name: name.trim().slice(0, 24), passwordHash, sessionToken, lastReadTs: 0 },
+      ],
     };
 
-    await saveRoom(code, room);
-    return NextResponse.json({ code, sessionToken: newSessionToken(code) });
-  } catch (error) {
-    console.error("Room creation error:", error);
-    return NextResponse.json(
-      { error: "Failed to create room." },
-      { status: 500 }
-    );
+    await saveRoom(room);
+
+    return NextResponse.json({
+      code,
+      slot: 1,
+      sessionToken,
+      name: room.participants[0].name,
+    });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ error: "Could not create room." }, { status: 500 });
   }
 }
