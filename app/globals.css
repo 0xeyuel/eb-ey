@@ -1,0 +1,83 @@
+:root {
+  /* soft paper-toned light theme */
+  --bg: #f6f1e6;
+  --surface: #fffdf9;
+  --surface-raised: #fbf6ec;
+  --hairline: #e6dcc6;
+
+  --ink: #2c2620;
+  --ink-dim: #8a7f6c;
+
+  --gold: #b8862e;
+  --gold-deep: #8c661f;
+  --gold-tint: #f3e6c8;
+
+  --violet: #6e6cc9;
+  --violet-deep: #4f4da0;
+  --violet-tint: #ebeafa;
+
+  --danger: #c0503c;
+  --danger-tint: #f6e1dc;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jbmono), "Courier New", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-image: radial-gradient(
+    circle at 50% -10%,
+    rgba(184, 134, 46, 0.12),
+    transparent 60%
+  );
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--gold-tint);
+  color: var(--ink);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
