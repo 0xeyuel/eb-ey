@@ -1,9 +1,13 @@
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 import { hashPassword, newSessionToken, verifyPassword } from "@/lib/auth";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 import { getRoom, saveRoom } from "@/lib/store";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(
   req: NextRequest,

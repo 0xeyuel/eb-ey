@@ -1,9 +1,13 @@
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 import { nanoid } from "nanoid";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 import {
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
   appendMessage,
   clearMessages,
   getMessages,
@@ -12,6 +16,8 @@ import {
   saveRoom,
 } from "@/lib/store";
 import type { Room } from "@/lib/types";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 function authenticate(room: Room, token: string | null) {
   if (!token) return null;

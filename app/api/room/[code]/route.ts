@@ -1,8 +1,10 @@
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 import { deleteRoom, getRoom } from "@/lib/store";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function DELETE(
   req: NextRequest,

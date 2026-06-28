@@ -1,11 +1,11 @@
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
 
 import { NextResponse } from 'next/server';
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 import { createRoom } from '@/lib/store';
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
