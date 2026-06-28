@@ -1,29 +1,49 @@
-
-
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-import { createRoom } from '@/lib/store';
+import { hashPassword, newSessionToken } from "@/lib/auth";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+import { createRoomRecord, saveRoom } from "@/lib/store";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+import type { Room } from "@/lib/types";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-export async function POST(request: Request) {
+
+export async function POST(req: NextRequest) {
   try {
-    console.log('=== ROOM CREATION STARTED ===');
-    console.log('Redis URL exists:', !!process.env.UPSTASH_REDIS_REST_URL);
-    console.log('Redis Token exists:', !!process.env.UPSTASH_REDIS_REST_TOKEN);
-    
-    const body = await request.json();
-    console.log('Request body:', body);
-    
-    const room = await createRoom(body);
-    console.log('Room created:', room);
-    
-    return NextResponse.json(room);
+    const { name, password } = await req.json();
+
+    if (!name || typeof name !== "string" || name.trim().length === 0) {
+      return NextResponse.json({ error: "Name is required." }, { status: 400 });
+    }
+    if (!password || typeof password !== "string" || password.length < 4) {
+      return NextResponse.json(
+        { error: "Password must be at least 4 characters." },
+        { status: 400 }
+      );
+    }
+
+    const code = await createRoomRecord();
+    const room: Room = {
+      code,
+      name: name.trim(),
+      password: await hashPassword(password),
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      participants: [],
+      messages: [],
+      typing: {},
+    };
+
+    await saveRoom(code, room);
+    return NextResponse.json({ code, sessionToken: newSessionToken(code) });
   } catch (error) {
-    console.error('Room creation error:', error);
+    console.error("Room creation error:", error);
     return NextResponse.json(
-      { error: String(error) },
+      { error: "Failed to create room." },
       { status: 500 }
     );
   }
